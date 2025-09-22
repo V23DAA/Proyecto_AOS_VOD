@@ -18,4 +18,6 @@ const app = initializeApp(firebaseConfig);
 
 //Iniciar BD
 const db = getFirestore(app);
+
+export default db;
 const analytics = getAnalytics(app);

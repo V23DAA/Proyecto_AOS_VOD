@@ -1,17 +1,125 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+//Servicio crear user
+import { createUser } from "../../services/userService";
 
 function RegisterComponent() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    name: "",
+    correo: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    correo: "",
     password: "",
     confirmPassword: "",
     acceptTerms: false,
   });
+
+  //Validaciones de campos
+  const validateName = (name) => {
+    if (!name) return "El nombre es obligatorio";
+    if (name.length < 2 || name.length > 100)
+      return "El nombre debe tener mas de 2 y menos de 100 caracteres";
+    if (!/^[a-zA-Z\s]*$/.test(name))
+      return "El nombre solo debe contener letras";
+    return "";
+  };
+
+  const validateEmail = (email) => {
+    if (!email) return "El correo es requerido";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return "El correo no es válido";
+    return "";
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return "La contraseña es requerida";
+    if (password.length < 8)
+      return "La contraseña debe tener al menos 8 caracteres";
+    return "";
+  };
+
+  const validateConfirmPassword = (password, confirmPassword) => {
+    if (!confirmPassword) return "Debe confirmar la contraseña";
+    if (password !== confirmPassword) return "Las contraseñas no coinciden";
+    return "";
+  };
+
+  const handleRegister = async () => {
+    const nameError = validateName(formData.name);
+    const emailError = validateEmail(formData.correo);
+    const passwordError = validatePassword(formData.password);
+    const confirmPasswordError = validateConfirmPassword(
+      formData.password,
+      formData.confirmPassword
+    );
+
+    setErrors({
+      name: nameError,
+      correo: emailError,
+      password: passwordError,
+      confirmPassword: confirmPasswordError,
+    });
+
+    setError("");
+    //Verificar todos los campos
+    if (nameError || emailError || passwordError || confirmPasswordError) {
+      return;
+    }
+
+    //Verficiar que coincidan las contraseñas
+    if (formData.password !== formData.confirmPassword) {
+      setError("Contraseñas no coinciden");
+      return;
+    }
+
+    if (!formData.acceptTerms) {
+      setError("Debes aceptar los terminos para seguir");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      //Enviar datos a fireStore cin el servicio
+      const newUserId = await createUser({
+        name: formData.name,
+        correo: formData.correo,
+        password: formData.password,
+        createdAt: new Date(),
+      });
+
+      console.log("Usuario creado, id = ", newUserId);
+      Swal.fire({
+        title: "Registrado",
+        text: "Redireccionando al login...",
+        icon: "success",
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.error("Error al registrar usuario", error);
+      Swal.fire({
+        title: "Error",
+        text: "Error al registrarse, intente de nuevo",
+        icon: "error",
+      });
+      setError("Error al registrar cuenta de usuario");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const styles = {
     container: {
@@ -225,9 +333,9 @@ function RegisterComponent() {
             <input
               type="email"
               placeholder="Correo electrónico"
-              value={formData.email}
+              value={formData.correo}
               onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
+                setFormData({ ...formData, correo: e.target.value })
               }
               style={styles.input}
               onFocus={(e) => Object.assign(e.target.style, styles.inputFocus)}
@@ -342,8 +450,10 @@ function RegisterComponent() {
               e.target.style.transform = "scale(1)";
               e.target.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
             }}
+            disabled={loading}
+            onClick={handleRegister}
           >
-            Crear Cuenta
+            {loading ? "Creando..." : "Crear Cuenta"}
           </button>
         </div>
 
