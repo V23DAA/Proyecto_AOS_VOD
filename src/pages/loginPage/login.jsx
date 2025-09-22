@@ -1,225 +1,219 @@
-import { useState } from 'react';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { useState } from "react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
+function LoginComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    remember: false
+    email: "",
+    password: "",
+    remember: false,
   });
-
-  const handleSubmit = () => {
-    console.log('Login:', formData);
-    if (onLogin) {
-      onLogin(formData);
-    }
-  };
 
   const styles = {
     container: {
-      minHeight: '100vh',
-      backgroundColor: '#111827',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '1rem'
+      minHeight: "100vh",
+      backgroundColor: "#111827",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "1rem",
     },
     card: {
-      width: '100%',
-      maxWidth: '28rem',
-      backgroundColor: '#1f2937',
-      borderRadius: '1rem',
-      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-      padding: '2rem',
-      border: '1px solid #374151'
+      width: "100%",
+      maxWidth: "28rem",
+      backgroundColor: "#1f2937",
+      borderRadius: "1rem",
+      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+      padding: "2rem",
+      border: "1px solid #374151",
     },
     header: {
-      textAlign: 'center',
-      marginBottom: '2rem'
+      textAlign: "center",
+      marginBottom: "2rem",
     },
     title: {
-      fontSize: '1.875rem',
-      fontWeight: 'bold',
-      color: 'white',
-      marginBottom: '0.5rem'
+      fontSize: "1.875rem",
+      fontWeight: "bold",
+      color: "white",
+      marginBottom: "0.5rem",
     },
     subtitle: {
-      color: '#9ca3af'
+      color: "#9ca3af",
     },
     form: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1.5rem'
+      display: "flex",
+      flexDirection: "column",
+      gap: "1.5rem",
     },
     inputGroup: {
-      position: 'relative',
+      position: "relative",
     },
     inputIcon: {
-      position: 'absolute',
-      left: '0.75rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      color: '#9ca3af',
-      width: '1.25rem',
-      height: '1.25rem',
-      pointerEvents: 'none'
+      position: "absolute",
+      left: "0.75rem",
+      top: "50%",
+      transform: "translateY(-50%)",
+      color: "#9ca3af",
+      width: "1.25rem",
+      height: "1.25rem",
+      pointerEvents: "none",
     },
     input: {
-      width: '100%',
-      backgroundColor: '#374151',
-      color: 'white',
-      padding: '0.75rem 0.75rem 0.75rem 2.75rem',
-      borderRadius: '0.5rem',
-      border: '1px solid #4b5563',
-      outline: 'none',
-      transition: 'all 0.3s ease',
-      fontSize: '1rem',
-      fontFamily: 'inherit',
-      boxSizing: 'border-box'
+      width: "100%",
+      backgroundColor: "#374151",
+      color: "white",
+      padding: "0.75rem 0.75rem 0.75rem 2.75rem",
+      borderRadius: "0.5rem",
+      border: "1px solid #4b5563",
+      outline: "none",
+      transition: "all 0.3s ease",
+      fontSize: "1rem",
+      fontFamily: "inherit",
+      boxSizing: "border-box",
     },
     inputFocus: {
-      borderColor: '#3b82f6',
-      boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1)'
+      borderColor: "#3b82f6",
+      boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)",
     },
     passwordToggle: {
-      position: 'absolute',
-      right: '0.75rem',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      background: 'none',
-      border: 'none',
-      color: '#9ca3af',
-      cursor: 'pointer',
-      padding: '0.25rem',
-      borderRadius: '0.25rem',
-      transition: 'color 0.3s ease',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
+      position: "absolute",
+      right: "0.75rem",
+      top: "50%",
+      transform: "translateY(-50%)",
+      background: "none",
+      border: "none",
+      color: "#9ca3af",
+      cursor: "pointer",
+      padding: "0.25rem",
+      borderRadius: "0.25rem",
+      transition: "color 0.3s ease",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
     passwordToggleHover: {
-      color: '#d1d5db'
+      color: "#d1d5db",
     },
     checkboxRow: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      gap: '0.5rem'
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexWrap: "wrap",
+      gap: "0.5rem",
     },
     checkboxLabel: {
-      display: 'flex',
-      alignItems: 'center',
-      cursor: 'pointer',
-      marginRight: '0.5rem'
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+      marginRight: "0.5rem",
     },
     checkbox: {
-      width: '1rem',
-      height: '1rem',
-      backgroundColor: '#374151',
-      border: '1px solid #4b5563',
-      borderRadius: '0.25rem',
-      cursor: 'pointer',
-      marginRight: '0.5rem'
+      width: "1rem",
+      height: "1rem",
+      backgroundColor: "#374151",
+      border: "1px solid #4b5563",
+      borderRadius: "0.25rem",
+      cursor: "pointer",
+      marginRight: "0.5rem",
     },
     checkboxText: {
-      fontSize: '0.875rem',
-      color: '#9ca3af'
+      fontSize: "0.875rem",
+      color: "#9ca3af",
     },
     forgotLink: {
-      fontSize: '0.875rem',
-      color: '#60a5fa',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      textDecoration: 'none',
-      transition: 'color 0.3s ease',
-      whiteSpace: 'nowrap'
+      fontSize: "0.875rem",
+      color: "#60a5fa",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      textDecoration: "none",
+      transition: "color 0.3s ease",
+      whiteSpace: "nowrap",
     },
     forgotLinkHover: {
-      color: '#93c5fd'
+      color: "#93c5fd",
     },
     submitButton: {
-      width: '100%',
-      backgroundColor: '#2563eb',
-      color: 'white',
-      padding: '0.75rem',
-      borderRadius: '0.5rem',
-      fontWeight: '600',
-      border: 'none',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      fontSize: '1rem',
-      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+      width: "100%",
+      backgroundColor: "#2563eb",
+      color: "white",
+      padding: "0.75rem",
+      borderRadius: "0.5rem",
+      fontWeight: "600",
+      border: "none",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      fontSize: "1rem",
+      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
     },
     submitButtonHover: {
-      backgroundColor: '#1d4ed8',
-      transform: 'scale(1.02)',
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+      backgroundColor: "#1d4ed8",
+      transform: "scale(1.02)",
+      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)",
     },
     footer: {
-      marginTop: '2rem',
-      textAlign: 'center'
+      marginTop: "2rem",
+      textAlign: "center",
     },
     footerText: {
-      color: '#9ca3af'
+      color: "#9ca3af",
     },
     registerLink: {
-      color: '#60a5fa',
-      fontWeight: '600',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      textDecoration: 'none',
-      transition: 'color 0.3s ease'
+      color: "#60a5fa",
+      fontWeight: "600",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      textDecoration: "none",
+      transition: "color 0.3s ease",
     },
     registerLinkHover: {
-      color: '#93c5fd'
+      color: "#93c5fd",
     },
     divider: {
-      marginTop: '2rem'
+      marginTop: "2rem",
     },
     dividerLine: {
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center'
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
     },
     dividerBorder: {
       flex: 1,
-      height: '1px',
-      backgroundColor: '#4b5563'
+      height: "1px",
+      backgroundColor: "#4b5563",
     },
     dividerText: {
-      padding: '0 0.5rem',
-      fontSize: '0.875rem',
-      color: '#9ca3af',
-      backgroundColor: '#1f2937'
+      padding: "0 0.5rem",
+      fontSize: "0.875rem",
+      color: "#9ca3af",
+      backgroundColor: "#1f2937",
     },
     socialButtons: {
-      marginTop: '1.5rem',
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '0.75rem'
+      marginTop: "1.5rem",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "0.75rem",
     },
     socialButton: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '0.625rem 1rem',
-      borderRadius: '0.5rem',
-      border: '1px solid #4b5563',
-      backgroundColor: '#374151',
-      fontSize: '0.875rem',
-      fontWeight: '500',
-      color: '#d1d5db',
-      cursor: 'pointer',
-      transition: 'background-color 0.3s ease'
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "0.625rem 1rem",
+      borderRadius: "0.5rem",
+      border: "1px solid #4b5563",
+      backgroundColor: "#374151",
+      fontSize: "0.875rem",
+      fontWeight: "500",
+      color: "#d1d5db",
+      cursor: "pointer",
+      transition: "background-color 0.3s ease",
     },
     socialButtonHover: {
-      backgroundColor: '#4b5563'
-    }
+      backgroundColor: "#4b5563",
+    },
   };
 
   return (
@@ -237,12 +231,14 @@ const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
               type="email"
               placeholder="Correo electrónico"
               value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               style={styles.input}
               onFocus={(e) => Object.assign(e.target.style, styles.inputFocus)}
               onBlur={(e) => {
-                e.target.style.borderColor = '#4b5563';
-                e.target.style.boxShadow = 'none';
+                e.target.style.borderColor = "#4b5563";
+                e.target.style.boxShadow = "none";
               }}
             />
           </div>
@@ -253,20 +249,24 @@ const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
               type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               value={formData.password}
-              onChange={(e) => setFormData({...formData, password: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               style={styles.input}
               onFocus={(e) => Object.assign(e.target.style, styles.inputFocus)}
               onBlur={(e) => {
-                e.target.style.borderColor = '#4b5563';
-                e.target.style.boxShadow = 'none';
+                e.target.style.borderColor = "#4b5563";
+                e.target.style.boxShadow = "none";
               }}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               style={styles.passwordToggle}
-              onMouseEnter={(e) => e.target.style.color = styles.passwordToggleHover.color}
-              onMouseLeave={(e) => e.target.style.color = '#9ca3af'}
+              onMouseEnter={(e) =>
+                (e.target.style.color = styles.passwordToggleHover.color)
+              }
+              onMouseLeave={(e) => (e.target.style.color = "#9ca3af")}
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -274,36 +274,39 @@ const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
 
           <div style={styles.checkboxRow}>
             <label style={styles.checkboxLabel}>
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 checked={formData.remember}
-                onChange={(e) => setFormData({...formData, remember: e.target.checked})}
+                onChange={(e) =>
+                  setFormData({ ...formData, remember: e.target.checked })
+                }
                 style={styles.checkbox}
               />
               <span style={styles.checkboxText}>Recordarme</span>
             </label>
-            <button
+            <Link
+              to={"/forgotPassword"}
               type="button"
-              onClick={onSwitchToForgot}
               style={styles.forgotLink}
-              onMouseEnter={(e) => e.target.style.color = styles.forgotLinkHover.color}
-              onMouseLeave={(e) => e.target.style.color = '#60a5fa'}
+              onMouseEnter={(e) =>
+                (e.target.style.color = styles.forgotLinkHover.color)
+              }
+              onMouseLeave={(e) => (e.target.style.color = "#60a5fa")}
             >
               ¿Olvidaste tu contraseña?
-            </button>
+            </Link>
           </div>
 
           <button
             type="button"
-            onClick={handleSubmit}
             style={styles.submitButton}
             onMouseEnter={(e) => {
               Object.assign(e.target.style, styles.submitButtonHover);
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#2563eb';
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+              e.target.style.backgroundColor = "#2563eb";
+              e.target.style.transform = "scale(1)";
+              e.target.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
             }}
           >
             Iniciar Sesión
@@ -312,15 +315,17 @@ const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
 
         <div style={styles.footer}>
           <p style={styles.footerText}>
-            ¿No tienes una cuenta?{' '}
-            <button
-              onClick={onSwitchToRegister}
+            ¿No tienes una cuenta?{" "}
+            <Link
+              to={"/register"}
               style={styles.registerLink}
-              onMouseEnter={(e) => e.target.style.color = styles.registerLinkHover.color}
-              onMouseLeave={(e) => e.target.style.color = '#60a5fa'}
+              onMouseEnter={(e) =>
+                (e.target.style.color = styles.registerLinkHover.color)
+              }
+              onMouseLeave={(e) => (e.target.style.color = "#60a5fa")}
             >
               Regístrate
-            </button>
+            </Link>
           </p>
         </div>
 
@@ -330,19 +335,25 @@ const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
             <span style={styles.dividerText}>O continúa con</span>
             <div style={styles.dividerBorder}></div>
           </div>
-          
+
           <div style={styles.socialButtons}>
-            <button 
+            <button
               style={styles.socialButton}
-              onMouseEnter={(e) => e.target.style.backgroundColor = styles.socialButtonHover.backgroundColor}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#374151'}
+              onMouseEnter={(e) =>
+                (e.target.style.backgroundColor =
+                  styles.socialButtonHover.backgroundColor)
+              }
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#374151")}
             >
               Google
             </button>
-            <button 
+            <button
               style={styles.socialButton}
-              onMouseEnter={(e) => e.target.style.backgroundColor = styles.socialButtonHover.backgroundColor}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#374151'}
+              onMouseEnter={(e) =>
+                (e.target.style.backgroundColor =
+                  styles.socialButtonHover.backgroundColor)
+              }
+              onMouseLeave={(e) => (e.target.style.backgroundColor = "#374151")}
             >
               GitHub
             </button>
@@ -351,6 +362,6 @@ const LoginComponent = ({ onSwitchToRegister, onSwitchToForgot, onLogin }) => {
       </div>
     </div>
   );
-};
+}
 
 export default LoginComponent;

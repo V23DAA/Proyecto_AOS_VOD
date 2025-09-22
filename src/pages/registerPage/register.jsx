@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
+function RegisterComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,13 +12,6 @@ const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
     confirmPassword: "",
     acceptTerms: false,
   });
-
-  const handleSubmit = () => {
-    console.log("Register:", formData);
-    if (onRegister) {
-      onRegister(formData);
-    }
-  };
 
   const styles = {
     container: {
@@ -190,8 +184,8 @@ const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <button
-          onClick={onSwitchToLogin}
+        <Link
+          to={"/"}
           style={styles.backButton}
           onMouseEnter={(e) =>
             (e.target.style.color = styles.backButtonHover.color)
@@ -200,7 +194,7 @@ const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
         >
           <ArrowLeft size={16} style={{ marginRight: "0.5rem" }} />
           Volver al login
-        </button>
+        </Link>
 
         <div style={styles.header}>
           <h1 style={styles.title}>Crear Cuenta</h1>
@@ -339,7 +333,6 @@ const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
 
           <button
             type="button"
-            onClick={handleSubmit}
             style={styles.submitButton}
             onMouseEnter={(e) => {
               Object.assign(e.target.style, styles.submitButtonHover);
@@ -357,8 +350,8 @@ const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
         <div style={styles.footer}>
           <p style={styles.footerText}>
             ¿Ya tienes una cuenta?{" "}
-            <button
-              onClick={onSwitchToLogin}
+            <Link
+              to={"/"}
               style={styles.loginLink}
               onMouseEnter={(e) =>
                 (e.target.style.color = styles.loginLinkHover.color)
@@ -366,12 +359,12 @@ const RegisterComponent = ({ onSwitchToLogin, onRegister }) => {
               onMouseLeave={(e) => (e.target.style.color = "#60a5fa")}
             >
               Inicia sesión
-            </button>
+            </Link>
           </p>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default RegisterComponent;
