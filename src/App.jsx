@@ -7,6 +7,7 @@ import RegisterComponent from "./pages/registerPage/Register.jsx";
 import ForgotPasswordComponent from "./pages/PasswordPage/ForgotPassword.jsx";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import ProductsComponent from "./pages/ProductsPage/products.jsx";
+import ProviderPage from "./pages/ProviderPage/Provider.jsx";
 
 function App() {
   return (
@@ -27,6 +28,11 @@ function App() {
             path="products"
             element={<ProductsComponent></ProductsComponent>}
           ></Route>
+          <Route
+            path="providers"
+            element={<ProviderPage></ProviderPage>}
+          ></Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
